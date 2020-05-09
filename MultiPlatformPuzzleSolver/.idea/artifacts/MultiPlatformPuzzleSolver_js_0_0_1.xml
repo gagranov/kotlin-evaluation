@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MultiPlatformPuzzleSolver-js-0.0.1">
+    <output-path>E:\kotlin-evaluation\MultiPlatformPuzzleSolver\build\libs</output-path>
+    <root id="archive" name="MultiPlatformPuzzleSolver-js-0.0.1.jar" />
+  </artifact>
+</component>
