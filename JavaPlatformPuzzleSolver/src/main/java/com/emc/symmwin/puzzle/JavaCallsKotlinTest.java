@@ -31,7 +31,7 @@ public class JavaCallsKotlinTest {
     notFound = 0;
 
     long start = System.currentTimeMillis();
-    for (int i = 0; i < 1000; ++i) {
+    for (int i = 0; i < 10000; ++i) {
       Collection<Board> solution = KotlinSolver.solve(Board.getBoard(SIZE, 9));
       if (solution == null)
         System.out.println("No Solution Found!");
