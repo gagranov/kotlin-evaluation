@@ -6,8 +6,8 @@
         <dependsOnModuleNames>MultiPlatformPuzzleSolver:commonTest</dependsOnModuleNames>
         <sourceSets>
           <sourceSet>MultiPlatformPuzzleSolver.commonMain</sourceSet>
-          <sourceSet>MultiPlatformPuzzleSolver.mingwMain</sourceSet>
           <sourceSet>MultiPlatformPuzzleSolver.commonTest</sourceSet>
+          <sourceSet>MultiPlatformPuzzleSolver.mingwMain</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>mingwTest|MultiPlatformPuzzleSolver:mingwTest|mingw</externalSystemTestTasks>
