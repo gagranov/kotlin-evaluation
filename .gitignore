@@ -1,8 +1,20 @@
-# Default ignored files
 **/*.class
+**/*.dcu
+**/*.dproj.local
+**/*.exe
+**/*.identcache
+**/*.res
+**/*.rsj
+**/*.rsm
+**/*.rst
+**/*.~dsk
 **/.gradle/
+**/.idea/workspace.xml
+**/__history/
+**/__recovery/
+**/backup/
 **/build/
 **/classes/
+**/lib/
 **/node_modules/
 **/out/
-**/.idea/workspace.xml

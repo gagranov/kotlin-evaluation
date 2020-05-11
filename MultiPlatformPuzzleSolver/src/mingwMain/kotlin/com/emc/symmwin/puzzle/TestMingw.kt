@@ -27,7 +27,7 @@ fun main() {
   var found = 0
   var notFound = 0
   val time = measureTimeMillis {
-    for (i in 1..1000) {
+    for (i in 1..2) {
       val solution = Solver.solve(Board.getBoard(SIZE, 9))
 
       val size = solution.size
