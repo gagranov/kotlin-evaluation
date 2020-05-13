@@ -31,24 +31,22 @@ public class JavaCallsKotlinTest {
     notFound = 0;
 
     long start = System.currentTimeMillis();
-    for (int i = 0; i < 10000; ++i) {
+    for (int i = 0; i < 4000; ++i) {
       Collection<Board> solution = KotlinSolver.solve(Board.getBoard(SIZE, 9));
-      if (solution == null)
+      if (solution == null) {
         System.out.println("No Solution Found!");
-      else {
+        ++notFound;
+      } else {
         int size = solution.size();
         if (solution.toArray(new Board[0])[size - 1].distanceFromSolution() == 0) {
           ++found;
-          //System.out.println("Solution Found: " + size + " move(s)!");
         } else {
           ++notFound;
-          //System.out.println("Solution Not Found: " + size + " move(s), distance: " + solution.get(size - 1).distanceFromSolution());
         }
-        // for (Board board : solution) print(board);
       }
     }
     long stop = System.currentTimeMillis();
-    System.out.printf("Elapsed time %d ms. Found=%d NotFound=%d: %f%% success\n", stop - start, found, notFound, (100.0 * found) / (found + notFound));
+    System.out.printf("Java Calls Kotlin: Elapsed time %d ms. Found=%d NotFound=%d: %f%% success\n", stop - start, found, notFound, 100.0 * found / (found + notFound));
   }
 }
 

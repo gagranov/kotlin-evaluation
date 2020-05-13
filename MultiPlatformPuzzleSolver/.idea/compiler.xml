@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="MultiPlatformPuzzleSolver.jvmMain~1" target="1.6" />
-      <module name="MultiPlatformPuzzleSolver.jvmTest~1" target="1.6" />
+      <module name="MultiPlatformPuzzleSolver.jvmMain" target="1.6" />
+      <module name="MultiPlatformPuzzleSolver.jvmTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

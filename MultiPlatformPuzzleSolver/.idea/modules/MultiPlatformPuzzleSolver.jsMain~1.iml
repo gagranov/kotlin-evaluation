@@ -2,22 +2,16 @@
 <module version="4">
   <component name="FacetManager">
     <facet type="kotlin-language" name="Kotlin">
-      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="MultiPlatformPuzzleSolver">
-        <dependsOnModuleNames>MultiPlatformPuzzleSolver:commonTest</dependsOnModuleNames>
+      <configuration version="3" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="false" externalProjectId="MultiPlatformPuzzleSolver">
+        <dependsOnModuleNames>MultiPlatformPuzzleSolver:commonMain</dependsOnModuleNames>
         <sourceSets>
-          <sourceSet>MultiPlatformPuzzleSolver.commonMain</sourceSet>
-          <sourceSet>MultiPlatformPuzzleSolver.jsMain</sourceSet>
-          <sourceSet>MultiPlatformPuzzleSolver.commonTest</sourceSet>
+          <sourceSet>MultiPlatformPuzzleSolver.commonMain~1</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
-        <externalSystemTestTasks>
-          <externalSystemTestTask>jsBrowserTest|MultiPlatformPuzzleSolver:jsTest|js</externalSystemTestTask>
-          <externalSystemTestTask>jsNodeTest|MultiPlatformPuzzleSolver:jsTest|js</externalSystemTestTask>
-        </externalSystemTestTasks>
-        <testOutputPath>$MODULE_DIR$/../../build/js/packages/MultiPlatformPuzzleSolver-test/kotlin/MultiPlatformPuzzleSolver-test.js</testOutputPath>
+        <productionOutputPath>$MODULE_DIR$/../../build/js/packages/MultiPlatformPuzzleSolver/kotlin/MultiPlatformPuzzleSolver.js</productionOutputPath>
         <compilerSettings />
         <compilerArguments>
-          <option name="outputFile" value="$MODULE_DIR$/../../build/js/packages/MultiPlatformPuzzleSolver-test/kotlin/MultiPlatformPuzzleSolver-test.js" />
+          <option name="outputFile" value="$MODULE_DIR$/../../build/js/packages/MultiPlatformPuzzleSolver/kotlin/MultiPlatformPuzzleSolver.js" />
           <option name="noStdlib" value="true" />
           <option name="sourceMap" value="true" />
           <option name="metaInfo" value="true" />

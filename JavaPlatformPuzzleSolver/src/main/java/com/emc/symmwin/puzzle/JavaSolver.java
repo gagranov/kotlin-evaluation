@@ -43,10 +43,10 @@ public class JavaSolver {
     private List<Move> getPossibleMoves() {
       ArrayList<Move> moves = new ArrayList<>();
       for (int row = m_row - 1; row <= m_row + 1; row += 2)
-        if ((row >= 0) && (row < m_size))
+        if (row >= 0 && row < m_size)
           moves.add(new Move(row, m_column));
       for (int column = m_column - 1; column <= m_column + 1; column += 2)
-        if ((column >= 0) && (column < m_size))
+        if (column >= 0 && column < m_size)
           moves.add(new Move(m_row, column));
       return moves;
     }
@@ -132,7 +132,7 @@ public class JavaSolver {
     queue.addLast(board);
     while (queue.size() > 0) {
       board = queue.removeFirst();
-      if ((++count == 100000) || (board.distanceFromSolution() == 0)) {
+      if (++count == 100000 || board.distanceFromSolution() == 0) {
         ArrayDeque<Board> solution = new ArrayDeque<>();
         while (board != null) {
           solution.addFirst(board);

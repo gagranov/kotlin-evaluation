@@ -23,20 +23,20 @@ fun main(args: Array<String>) {
   var found = 0
   var notFound = 0
   val time = measureTimeMillis {
-    for (i in 1..10000) {
+    for (i in 1..4000) {
       val solution = KotlinSolver.solve(Board.getBoard(SIZE, 9))
-      if (solution == null) println("No Solution Found!") else {
+      if (solution == null) {
+        println("No Solution Found!")
+        ++notFound
+      } else {
         val size = solution.size
         if (solution.toTypedArray()[size - 1]!!.distanceFromSolution() == 0) {
           ++found
-          //System.out.println("Solution Found: " + size + " move(s)!");
         } else {
           ++notFound
-          //System.out.println("Solution Not Found: " + size + " move(s), distance: " + solution.get(size - 1).distanceFromSolution());
         }
-        // for (Board board : solution) print(board);
       }
     }
   }
-  System.out.printf("Elapsed time %d ms. Found=%d NotFound=%d: %f%% success\n", time, found, notFound, 100.0 * found / (found + notFound))
+  System.out.printf("Kotlin calls Kotlin: Elapsed time %d ms. Found=%d NotFound=%d: %f%% success\n", time, found, notFound, 100.0 * found / (found + notFound))
 }

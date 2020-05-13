@@ -5,9 +5,9 @@
       <configuration version="3" platform="Native " allPlatforms="Native []" useProjectSettings="false" isTestModule="true" externalProjectId="MultiPlatformPuzzleSolver">
         <dependsOnModuleNames>MultiPlatformPuzzleSolver:commonTest</dependsOnModuleNames>
         <sourceSets>
-          <sourceSet>MultiPlatformPuzzleSolver.commonMain</sourceSet>
-          <sourceSet>MultiPlatformPuzzleSolver.commonTest</sourceSet>
-          <sourceSet>MultiPlatformPuzzleSolver.mingwMain</sourceSet>
+          <sourceSet>MultiPlatformPuzzleSolver.commonTest~1</sourceSet>
+          <sourceSet>MultiPlatformPuzzleSolver.commonMain~1</sourceSet>
+          <sourceSet>MultiPlatformPuzzleSolver.mingwMain~1</sourceSet>
         </sourceSets>
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>mingwTest|MultiPlatformPuzzleSolver:mingwTest|mingw</externalSystemTestTasks>
