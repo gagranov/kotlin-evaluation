@@ -23,7 +23,7 @@ var
 begin
   try
     symbols := PuzzleSolver_symbols^;
-    symbols.kotlin.root.com.emc.symmwin.puzzle.main();
+   // symbols.kotlin.root.com.emc.symmwin.puzzle.main();
     boardCompanion := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.Companion._instance;
     board := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.Companion.getBoard(boardCompanion,SIZE,100);
     for row := 1 to SIZE do

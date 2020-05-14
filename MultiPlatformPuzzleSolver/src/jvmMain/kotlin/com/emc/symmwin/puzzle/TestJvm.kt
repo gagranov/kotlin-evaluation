@@ -1,7 +1,6 @@
 package com.emc.symmwin.puzzle
 
 import com.emc.symmwin.puzzle.Solver.Board
-import kotlin.system.measureTimeMillis
 
 internal const val SIZE = 4
 
@@ -21,27 +20,12 @@ internal fun print(board: Board) {
 
 @kotlin.ExperimentalStdlibApi
 fun main() {
-  var found = 0
-  var notFound = 0
-  val time = measureTimeMillis {
-    for (i in 1..1000) {
-      val solution = Solver.solve(Board.getBoard(SIZE, 9))
-      val size = solution.size
-      if (solution[size - 1].distanceFromSolution() == 0) {
-        ++found
-        //System.out.println("Solution Found: " + size + " move(s)!");
-      } else {
-        ++notFound
-        //System.out.println("Solution Not Found: " + size + " move(s), distance: " + solution.get(size - 1).distanceFromSolution());
-      }
-      // for (Board board : solution) print(board);
-    }
-  }
+  val results = test(SIZE, 100000, 9, 1000)
   System.out.printf(
-    "Elapsed time %d ms. Found=%d NotFound=%d: %f%% success\n",
-    time,
-    found,
-    notFound,
-    100.0 * found / (found + notFound)
+      "Elapsed time %d ms. Found=%d NotFound=%d: %f%% success\n",
+      results.elapsedTime,
+      results.found,
+      results.notFound,
+      100.0 * results.found / (results.found + results.notFound)
   )
 }

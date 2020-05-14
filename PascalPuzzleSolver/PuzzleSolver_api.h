@@ -53,19 +53,31 @@ typedef struct {
 } PuzzleSolver_kref_kotlin_Unit;
 typedef struct {
   PuzzleSolver_KNativePtr pinned;
+} PuzzleSolver_kref_kotlin_Function0;
+typedef struct {
+  PuzzleSolver_KNativePtr pinned;
+} PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults;
+typedef struct {
+  PuzzleSolver_KNativePtr pinned;
+} PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution;
+typedef struct {
+  PuzzleSolver_KNativePtr pinned;
+} PuzzleSolver_kref_kotlin_collections_List;
+typedef struct {
+  PuzzleSolver_KNativePtr pinned;
 } PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver;
 typedef struct {
   PuzzleSolver_KNativePtr pinned;
 } PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;
 typedef struct {
   PuzzleSolver_KNativePtr pinned;
-} PuzzleSolver_kref_kotlin_collections_List;
-typedef struct {
-  PuzzleSolver_KNativePtr pinned;
 } PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;
 typedef struct {
   PuzzleSolver_KNativePtr pinned;
 } PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board_Companion;
+typedef struct {
+  PuzzleSolver_KNativePtr pinned;
+} PuzzleSolver_kref_kotlin_Any;
 
 
 typedef struct {
@@ -92,16 +104,26 @@ typedef struct {
             struct {
               PuzzleSolver_KLong (*getSystemTimeInMillis)();
               void (*main)();
+              PuzzleSolver_KLong (*measureTimeMillis)(PuzzleSolver_kref_kotlin_Function0 block);
+              PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults (*test)(PuzzleSolver_KInt boardSize, PuzzleSolver_KInt maxQueueSize, PuzzleSolver_KInt randomMoveCount, PuzzleSolver_KInt repeatCount);
+              struct {
+                PuzzleSolver_KType* (*_type)(void);
+                PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution (*Solution)(PuzzleSolver_kref_kotlin_collections_List boards);
+                PuzzleSolver_KBoolean (*get_isSolutionFound)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution thiz);
+                PuzzleSolver_KInt (*get_moveCount)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution thiz);
+                void (*value)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution thiz, PuzzleSolver_KInt move, PuzzleSolver_KInt row, PuzzleSolver_KInt column);
+              } Solution;
               struct {
                 PuzzleSolver_KType* (*_type)(void);
                 PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver (*_instance)();
-                PuzzleSolver_kref_kotlin_collections_List (*solve)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver thiz, PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board puzzle);
+                PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution (*solve)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver thiz, PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board puzzle, PuzzleSolver_KInt maxQueueSize);
                 struct {
                   PuzzleSolver_KType* (*_type)(void);
                   PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board (*Board)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board board);
                   PuzzleSolver_KInt (*compareTo)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board thiz, PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board board);
                   PuzzleSolver_KInt (*distanceFromSolution)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board thiz);
                   PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board (*makeMove)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board thiz, PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move move);
+                  PuzzleSolver_KBoolean (*makeMove_)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board thiz, PuzzleSolver_KInt row, PuzzleSolver_KInt column);
                   PuzzleSolver_KInt (*number)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board thiz, PuzzleSolver_KInt row, PuzzleSolver_KInt column);
                   PuzzleSolver_kref_kotlin_collections_List (*possibleMoves)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board thiz);
                   struct {
@@ -115,8 +137,21 @@ typedef struct {
                   PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move (*Move)(PuzzleSolver_KInt row, PuzzleSolver_KInt column);
                   PuzzleSolver_KInt (*get_column)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz);
                   PuzzleSolver_KInt (*get_row)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz);
+                  PuzzleSolver_KInt (*component1)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz);
+                  PuzzleSolver_KInt (*component2)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz);
+                  PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move (*copy)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz, PuzzleSolver_KInt row, PuzzleSolver_KInt column);
+                  PuzzleSolver_KBoolean (*equals)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz, PuzzleSolver_kref_kotlin_Any other);
+                  PuzzleSolver_KInt (*hashCode)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz);
+                  const char* (*toString)(PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move thiz);
                 } Move;
               } Solver;
+              struct {
+                PuzzleSolver_KType* (*_type)(void);
+                PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults (*TestResults)(PuzzleSolver_KLong elapsedTime, PuzzleSolver_KInt found, PuzzleSolver_KInt notFound);
+                PuzzleSolver_KLong (*get_elapsedTime)(PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults thiz);
+                PuzzleSolver_KInt (*get_found)(PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults thiz);
+                PuzzleSolver_KInt (*get_notFound)(PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults thiz);
+              } TestResults;
             } puzzle;
           } symmwin;
         } emc;

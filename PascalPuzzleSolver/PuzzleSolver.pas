@@ -24,12 +24,12 @@ type
   PuzzleSolver_KType = record
   end;
   PPuzzleSolver_KType  = ^PuzzleSolver_KType;
-    
-type
+
+  type
     PuzzleSolver_KBoolean = byte;
 
     PuzzleSolver_KChar = word;
-  
+
     PuzzleSolver_KByte = char;
 
     PuzzleSolver_KShort = smallint;
@@ -88,6 +88,22 @@ type
         pinned : PuzzleSolver_KNativePtr;
       end;
 
+    PuzzleSolver_kref_kotlin_Function0 = record
+        pinned : PuzzleSolver_KNativePtr;
+      end;
+
+    PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults = record
+        pinned : PuzzleSolver_KNativePtr;
+      end;
+
+    PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution = record
+        pinned : PuzzleSolver_KNativePtr;
+      end;
+
+    PuzzleSolver_kref_kotlin_collections_List = record
+        pinned : PuzzleSolver_KNativePtr;
+      end;
+
     PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver = record
         pinned : PuzzleSolver_KNativePtr;
       end;
@@ -96,15 +112,15 @@ type
         pinned : PuzzleSolver_KNativePtr;
       end;
 
-    PuzzleSolver_kref_kotlin_collections_List = record
-        pinned : PuzzleSolver_KNativePtr;
-      end;
-
     PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move = record
         pinned : PuzzleSolver_KNativePtr;
       end;
 
     PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board_Companion = record
+        pinned : PuzzleSolver_KNativePtr;
+      end;
+
+    PuzzleSolver_kref_kotlin_Any = record
         pinned : PuzzleSolver_KNativePtr;
       end;
 
@@ -129,16 +145,26 @@ type
                             puzzle : record
                                 getSystemTimeInMillis : function :PuzzleSolver_KLong;cdecl;
                                 main : procedure ;cdecl;
+                                measureTimeMillis : function (block:PuzzleSolver_kref_kotlin_Function0):PuzzleSolver_KLong;cdecl;
+                                test : function (boardSize:PuzzleSolver_KInt; maxQueueSize:PuzzleSolver_KInt; randomMoveCount:PuzzleSolver_KInt; repeatCount:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults;cdecl;
+                                Solution : record
+                                    _type : function :PPuzzleSolver_KType;cdecl;
+                                    Solution : function (boards:PuzzleSolver_kref_kotlin_collections_List):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution;cdecl;
+                                    get_isSolutionFound : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution):PuzzleSolver_KBoolean;cdecl;
+                                    get_moveCount : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution):PuzzleSolver_KInt;cdecl;
+                                    value : procedure (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution; move:PuzzleSolver_KInt; row:PuzzleSolver_KInt; column:PuzzleSolver_KInt);cdecl;
+                                  end;
                                 Solver : record
                                     _type : function :PPuzzleSolver_KType;cdecl;
                                     _instance : function :PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver;cdecl;
-                                    solve : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver; puzzle:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_kref_kotlin_collections_List;cdecl;
+                                    solve : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver; puzzle:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; maxQueueSize:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solution;cdecl;
                                     Board : record
                                         _type : function :PPuzzleSolver_KType;cdecl;
                                         Board : function (board:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;cdecl;
                                         compareTo : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; board:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_KInt;cdecl;
                                         distanceFromSolution : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_KInt;cdecl;
                                         makeMove : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; move:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;cdecl;
+                                        makeMove_ : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; row:PuzzleSolver_KInt; column:PuzzleSolver_KInt):PuzzleSolver_KBoolean;cdecl;
                                         number : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; row:PuzzleSolver_KInt; column:PuzzleSolver_KInt):PuzzleSolver_KInt;cdecl;
                                         possibleMoves : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_kref_kotlin_collections_List;cdecl;
                                         Companion : record
@@ -152,7 +178,20 @@ type
                                         Move : function (row:PuzzleSolver_KInt; column:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;cdecl;
                                         get_column : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_KInt;cdecl;
                                         get_row : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_KInt;cdecl;
+                                        component1 : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_KInt;cdecl;
+                                        component2 : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_KInt;cdecl;
+                                        copy : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move; row:PuzzleSolver_KInt; column:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;cdecl;
+                                        equals : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move; other:PuzzleSolver_kref_kotlin_Any):PuzzleSolver_KBoolean;cdecl;
+                                        hashCode : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_KInt;cdecl;
+                                        toString : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):Pchar;cdecl;
                                       end;
+                                  end;
+                                TestResults : record
+                                    _type : function :PPuzzleSolver_KType;cdecl;
+                                    TestResults : function (elapsedTime:PuzzleSolver_KLong; found:PuzzleSolver_KInt; notFound:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults;cdecl;
+                                    get_elapsedTime : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults):PuzzleSolver_KLong;cdecl;
+                                    get_found : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults):PuzzleSolver_KInt;cdecl;
+                                    get_notFound : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_TestResults):PuzzleSolver_KInt;cdecl;
                                   end;
                               end;
                           end;
