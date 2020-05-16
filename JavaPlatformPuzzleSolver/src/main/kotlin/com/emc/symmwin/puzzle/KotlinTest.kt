@@ -23,7 +23,7 @@ fun main(args: Array<String>) {
   var found = 0
   var notFound = 0
   val time = measureTimeMillis {
-    for (i in 1..4000) {
+    repeat(4000) {
       val solution = KotlinSolver.solve(Board.getBoard(SIZE, 9))
       if (solution == null) {
         println("No Solution Found!")

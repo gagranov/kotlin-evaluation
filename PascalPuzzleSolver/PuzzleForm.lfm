@@ -1,0 +1,45 @@
+object Form1: TForm1
+  Left = 511
+  Height = 372
+  Top = 145
+  Width = 653
+  Align = alClient
+  BorderWidth = 4
+  Caption = 'Pascal Call Kotlin DLL'
+  ClientHeight = 352
+  ClientWidth = 653
+  Color = clNavy
+  Constraints.MinHeight = 240
+  Constraints.MinWidth = 240
+  Font.Color = clRed
+  Font.Height = 32
+  Font.Name = 'Calibri'
+  Font.Style = [fsBold]
+  Menu = MainMenu1
+  OnCreate = OnFormCreate
+  OnDestroy = OnFormDestroy
+  OnResize = OnFormResize
+  LCLVersion = '2.0.8.0'
+  object Panel1: TPanel
+    Left = 4
+    Height = 344
+    Top = 4
+    Width = 645
+    Align = alClient
+    Color = clTeal
+    ParentColor = False
+    TabOrder = 0
+  end
+  object MainMenu1: TMainMenu
+    left = 49
+    top = 60
+    object Again: TMenuItem
+      Caption = 'Start Over'
+      OnClick = OnStartOver
+    end
+    object Solve: TMenuItem
+      Caption = 'Solve'
+      OnClick = OnSolve
+    end
+  end
+end

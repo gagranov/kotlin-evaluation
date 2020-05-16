@@ -11,18 +11,6 @@ inline fun measureTimeMillis(block: () -> Unit): Long {
   return getSystemTimeInMillis() - start
 }
 
-class Solution(private val boards: List<Solver.Board>) {
-  val moveCount: Int
-    get() = boards.size
-
-  val isSolutionFound: Boolean
-    get() = boards.last().distanceFromSolution() == 0
-
-  fun value(move: Int, row: Int, column: Int) {
-    boards[move].number(row, column)
-  }
-}
-
 class TestResults(val elapsedTime: Long, val found: Int, val notFound: Int)
 
 @kotlin.ExperimentalStdlibApi
@@ -30,9 +18,11 @@ fun test(boardSize: Int, maxQueueSize: Int, randomMoveCount: Int, repeatCount: I
   var found = 0
   var notFound = 0
   val time = measureTimeMillis {
-    for (i in 1..repeatCount) {
-      val solution = Solver.solve(Solver.Board.getBoard(boardSize, randomMoveCount), maxQueueSize)
-      if (solution.isSolutionFound) {
+    repeat(repeatCount) {
+      val puzzle = Solver.Board.getBoard(boardSize, randomMoveCount)
+      val move = Solver.solve(puzzle, maxQueueSize)
+      move.applyTo(puzzle)
+      if (puzzle.distanceFromSolution() == 0) {
         ++found
       } else {
         ++notFound
@@ -45,78 +35,78 @@ fun test(boardSize: Int, maxQueueSize: Int, randomMoveCount: Int, repeatCount: I
 object Solver {
 
   @kotlin.ExperimentalStdlibApi
-  fun solve(puzzle: Board, maxQueueSize: Int = 100000): Solution {
-    val queue = ArrayDeque<Board>()
-    val solution = ArrayDeque<Board>()
+  fun solve(puzzle: Board, maxQueueSize: Int): Move {
+    val queue = ArrayDeque<Move>()
     var count = 0
-    queue.addLast(puzzle)
-    while (queue.size > 0) {
-      var board = queue.removeFirst()
+    for (possibleMove in puzzle.possibleMoves(null)) {
+      queue.addLast(possibleMove)
+    }
+    var move: Move
+    do {
+      move = queue.removeFirst()
+      val board = Board(puzzle)
+      move.applyTo(board)
       if (++count == maxQueueSize || board.distanceFromSolution() == 0) {
-        while (true) {
-          solution.addFirst(board)
-          if (board.parent != null) {
-            board = board.parent!!
-          } else
-            break
-        }
         break
       }
-      for (move in board.possibleMoves()) {
-        queue.add(Board(board).makeMove(move))
+      for (possibleMove in board.possibleMoves(move)) {
+        queue.addLast(possibleMove)
       }
-    }
-    return Solution(solution)
+    } while (queue.size > 0)
+    return move
   }
 
-  data class Move(val row: Int, val column: Int)
+  class Move(val row: Int, val column: Int, val parent: Move?) {
 
-  class Board /*implements Comparable<Board>*/ private constructor(private val size: Int) {
+    internal fun applyTo(board: Board) {
+      parent?.applyTo(board)
+      board.makeMove(this)
+    }
+  }
+
+  class Board private constructor(private val size: Int) {
     private val number: Array<IntArray> = Array(size) { IntArray(size) }
 
     // location with no tile:
     private var row = 0
     private var column = 0
-    internal var parent: Board? = null
 
     constructor(board: Board) : this(board.size) {
       for (row in 0 until size) for (column in 0 until size) number[row][column] = board.number[row][column]
       row = board.row
       column = board.column
-      parent = board
     }
 
-    fun possibleMoves(): List<Move> {
+    fun possibleMoves(parent: Move?): List<Move> {
       val moves = ArrayList<Move>()
       var row = row - 1
       while (row <= this.row + 1) {
-        if (row in 0 until size) moves.add(Move(row, column))
+        if (row in 0 until size) moves.add(Move(row, column, parent))
         row += 2
       }
       var column = column - 1
       while (column <= this.column + 1) {
-        if (column in 0 until size) moves.add(Move(this.row, column))
+        if (column in 0 until size) moves.add(Move(this.row, column, parent))
         column += 2
       }
       return moves
     }
 
-    fun makeMove(move: Move): Board {
+    fun makeMove(move: Move) {
       number[row][column] = number[move.row][move.column]
       row = move.row
       column = move.column
       number[row][column] = 0
-      return this
     }
 
-    fun makeMove(row: Int, column: Int): Boolean {
-      val move = Move(row, column)
-      return if (move in possibleMoves()) {
-        makeMove(move)
-        true
-      } else {
-        false
+    fun tryMove(row: Int, column: Int): Boolean {
+      for (possibleMove in possibleMoves(null)) {
+        if ((possibleMove.row == row) && (possibleMove.column) == column) {
+          makeMove(possibleMove)
+          return true
+        }
       }
+      return false
     }
 
     fun number(row: Int, column: Int): Int {
@@ -142,22 +132,6 @@ object Solver {
       return distance
     }
 
-    private fun depth(): Int {
-      var board: Board? = this
-      var count = 1
-      while (board!!.parent != null) {
-        board = board.parent
-        ++count
-      }
-      return count
-    }
-
-    operator fun compareTo(board: Board): Int {
-      var compare = depth() - board.depth()
-      if (compare == 0) compare = distanceFromSolution() - board.distanceFromSolution()
-      return compare
-    }
-
     companion object {
 
       private fun getBoard(size: Int): Board {
@@ -173,9 +147,9 @@ object Solver {
       fun getBoard(size: Int, randomMoveCount: Int): Board {
         val board = getBoard(size)
         val rand = Random(getSystemTimeInMillis())
-        for (randomMove in 0 until randomMoveCount) {
-          val moves = board.possibleMoves()
-          board.makeMove(moves[rand.nextInt(moves.size)])
+        repeat(randomMoveCount) {
+          val moves = board.possibleMoves(null)
+          moves[rand.nextInt(moves.size)].applyTo(board)
         }
         return board
       }

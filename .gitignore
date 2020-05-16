@@ -3,6 +3,7 @@
 **/*.dproj.local
 **/*.exe
 **/*.identcache
+**/*.lps
 **/*.res
 **/*.rsj
 **/*.rsm
@@ -18,3 +19,5 @@
 **/lib/
 **/node_modules/
 **/out/
+**/ppas.bat
+

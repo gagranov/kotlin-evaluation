@@ -23,7 +23,7 @@ private fun print(board: Board) {
 
 @kotlin.ExperimentalStdlibApi
 fun main() {
-  val results = test(SIZE, 100000, 9, 100)
+  val results = test(SIZE, 100000, 9, 300)
   println("Elapsed time " + results.elapsedTime + " ms. Found=" + results.found + " NotFound=" + results.notFound + " success " + (100.0 * results.found / (results.found + results.notFound)) + "%")
 }
 
