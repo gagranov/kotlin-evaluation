@@ -20,9 +20,7 @@ fun test(boardSize: Int, maxQueueSize: Int, randomMoveCount: Int, repeatCount: I
   val time = measureTimeMillis {
     repeat(repeatCount) {
       val puzzle = Solver.Board.getBoard(boardSize, randomMoveCount)
-      val move = Solver.solve(puzzle, maxQueueSize)
-      move.applyTo(puzzle)
-      if (puzzle.distanceFromSolution() == 0) {
+      if (Solver.solve(puzzle, maxQueueSize) != null) {
         ++found
       } else {
         ++notFound
@@ -35,34 +33,27 @@ fun test(boardSize: Int, maxQueueSize: Int, randomMoveCount: Int, repeatCount: I
 object Solver {
 
   @kotlin.ExperimentalStdlibApi
-  fun solve(puzzle: Board, maxQueueSize: Int): Move {
-    val queue = ArrayDeque<Move>()
+  fun solve(puzzle: Board, maxQueueSize: Int): Board? {
+    val queue = ArrayDeque<Board>()
+    val visited = HashSet<Board>()
     var count = 0
-    for (possibleMove in puzzle.possibleMoves(null)) {
-      queue.addLast(possibleMove)
-    }
-    var move: Move
-    do {
-      move = queue.removeFirst()
-      val board = Board(puzzle)
-      move.applyTo(board)
-      if (++count == maxQueueSize || board.distanceFromSolution() == 0) {
+    queue.addLast(puzzle)
+    visited.add(puzzle)
+    while (queue.size > 0) {
+      val board = queue.removeFirst()
+      if (board.distanceFromSolution() == 0)
+        return board
+      if (++count == maxQueueSize)
         break
+      for (move in board.possibleMoves()) {
+        val nextBoard = Board(board).makeMove(move)
+        if (visited.add(nextBoard)) queue.addLast(nextBoard)
       }
-      for (possibleMove in board.possibleMoves(move)) {
-        queue.addLast(possibleMove)
-      }
-    } while (queue.size > 0)
-    return move
-  }
-
-  class Move(val row: Int, val column: Int, val parent: Move?) {
-
-    internal fun applyTo(board: Board) {
-      parent?.applyTo(board)
-      board.makeMove(this)
     }
+    return null
   }
+
+  class Move constructor(val row: Int, val column: Int)
 
   class Board private constructor(private val size: Int) {
     private val number: Array<IntArray> = Array(size) { IntArray(size) }
@@ -71,36 +62,40 @@ object Solver {
     private var row = 0
     private var column = 0
 
-    constructor(board: Board) : this(board.size) {
+    var parent: Board? = null
+
+    constructor(board: Board?) : this(board!!.size) {
       for (row in 0 until size) for (column in 0 until size) number[row][column] = board.number[row][column]
       row = board.row
       column = board.column
+      parent = board
     }
 
-    fun possibleMoves(parent: Move?): List<Move> {
+    fun possibleMoves(): List<Move> {
       val moves = ArrayList<Move>()
       var row = row - 1
       while (row <= this.row + 1) {
-        if (row in 0 until size) moves.add(Move(row, column, parent))
+        if (row in 0 until size) moves.add(Move(row, column))
         row += 2
       }
       var column = column - 1
       while (column <= this.column + 1) {
-        if (column in 0 until size) moves.add(Move(this.row, column, parent))
+        if (column in 0 until size) moves.add(Move(this.row, column))
         column += 2
       }
       return moves
     }
 
-    fun makeMove(move: Move) {
+    fun makeMove(move: Move): Board {
       number[row][column] = number[move.row][move.column]
       row = move.row
       column = move.column
       number[row][column] = 0
+      return this
     }
 
     fun tryMove(row: Int, column: Int): Boolean {
-      for (possibleMove in possibleMoves(null)) {
+      for (possibleMove in possibleMoves()) {
         if ((possibleMove.row == row) && (possibleMove.column) == column) {
           makeMove(possibleMove)
           return true
@@ -111,6 +106,18 @@ object Solver {
 
     fun number(row: Int, column: Int): Int {
       return number[row][column]
+    }
+
+    override fun equals(other: Any?): Boolean {
+      if (other is Board) {
+        for (row in 0 until size) for (column in 0 until size) if (number[row][column] != other.number[row][column]) return false
+        return true
+      }
+      return false
+    }
+
+    override fun hashCode(): Int {
+      return number.contentDeepHashCode()
     }
 
     fun distanceFromSolution(): Int {
@@ -133,11 +140,9 @@ object Solver {
     }
 
     companion object {
-
       private fun getBoard(size: Int): Board {
         val board = Board(size)
-        for (row in 0 until size) for (column in 0 until size) board.number[row][column] =
-            row * size + column + 1
+        for (row in 0 until size) for (column in 0 until size) board.number[row][column] = row * size + column + 1
         board.row = size - 1
         board.column = size - 1
         board.number[size - 1][size - 1] = 0
@@ -145,15 +150,22 @@ object Solver {
       }
 
       fun getBoard(size: Int, randomMoveCount: Int): Board {
-        val board = getBoard(size)
+        val visited = HashSet<Board>()
+        var board = getBoard(size)
         val rand = Random(getSystemTimeInMillis())
-        repeat(randomMoveCount) {
-          val moves = board.possibleMoves(null)
-          moves[rand.nextInt(moves.size)].applyTo(board)
+        visited.add(board)
+        var count = randomMoveCount
+        while (count > 0) {
+          val moves = board.possibleMoves()
+          val nextBoard = Board(board).makeMove(moves[rand.nextInt(moves.size)])
+          if (visited.add(nextBoard)) {
+            --count
+            board = nextBoard
+            board.parent = null;
+          }
         }
         return board
       }
     }
-
   }
 }

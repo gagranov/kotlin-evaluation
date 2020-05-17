@@ -102,8 +102,8 @@ end;
 
 procedure TForm1.OnSolve(Sender: TObject);
 begin
-  puzzle.getSolutionSize;
-  while puzzle.trySolution do
+  puzzle.getSolution;
+  while puzzle.showSolution do
     begin
       Sleep(1000);
       rebuild;

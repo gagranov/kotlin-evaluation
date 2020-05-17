@@ -20,14 +20,14 @@ type
     solver: PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver;
     boardCompanion: PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board_Companion;
     board: PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;
-    solution: array of PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;
+    solution: array of PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;
   public
     constructor Create;
     destructor Destroy; override;
     function getValue(row: Integer; column: Integer): Integer;
     function tryMove(row: Integer; column: Integer): Boolean;
-    function getSolutionSize: Integer;
-    function trySolution: Boolean;
+    procedure getSolution;
+    function showSolution: Boolean;
     procedure createBoard;
     function distanceFromSolution: Integer;
   end;
@@ -54,7 +54,7 @@ procedure TPuzzle.createBoard;
 begin
   if board.pinned <> nil then
     symbols.DisposeStablePointer(board.pinned);
-  board := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.Companion.getBoard(boardCompanion,SIZE,12);
+  board := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.Companion.getBoard(boardCompanion,SIZE,9);
 end;
 
 function TPuzzle.getValue(row: Integer; column: Integer): Integer;
@@ -67,28 +67,27 @@ begin
   Result := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.tryMove(board, row, column) <> 0;
 end;
 
-function TPuzzle.getSolutionSize: Integer;
+procedure TPuzzle.getSolution;
 var
-  move: PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;
+  solutionBoard: PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;
   size: Integer;
 begin
-  for move in solution do
-    if move.pinned <> nil then
-      symbols.DisposeStablePointer(move.pinned);
+  for solutionBoard in solution do
+    if solutionBoard.pinned <> nil then
+      symbols.DisposeStablePointer(solutionBoard.pinned);
   size := 0;
   SetLength(solution,size);
-  move := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.solve(solver,board,MAX_QUEUE_SIZE);
-  while move.pinned <> nil do
+  solutionBoard := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.solve(solver,board,MAX_QUEUE_SIZE);
+  while solutionBoard.pinned <> nil do
     begin
       SetLength(solution, size + 1);
-      solution[size] := move;
-      move := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Move.get_parent(move);
+      solution[size] := solutionBoard;
+      solutionBoard := symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.get_parent(solutionBoard);
       Inc(size);
     end;
-  Result := Length(Solution);
 end;
 
-function TPuzzle.trySolution: Boolean;
+function TPuzzle.showSolution: Boolean;
 var
   i: Integer;
 begin
@@ -96,7 +95,9 @@ begin
   Result := i >= 0;
   if Result then
     begin
-      symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.makeMove(board,solution[i]);
+      if board.pinned <> nil then
+        symbols.DisposeStablePointer(board.pinned);
+      board := solution[i];
       SetLength(solution,i);
     end
 end;

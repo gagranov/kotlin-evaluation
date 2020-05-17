@@ -104,6 +104,10 @@ type
         pinned : PuzzleSolver_KNativePtr;
       end;
 
+    PuzzleSolver_kref_kotlin_Any = record
+        pinned : PuzzleSolver_KNativePtr;
+      end;
+
     PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move = record
         pinned : PuzzleSolver_KNativePtr;
       end;
@@ -142,14 +146,18 @@ type
                                 Solver : record
                                     _type : function :PPuzzleSolver_KType;cdecl;
                                     _instance : function :PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver;cdecl;
-                                    solve : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver; puzzle:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; maxQueueSize:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;cdecl;
+                                    solve : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver; puzzle:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; maxQueueSize:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;cdecl;
                                     Board : record
                                         _type : function :PPuzzleSolver_KType;cdecl;
                                         Board : function (board:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;cdecl;
+                                        get_parent : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;cdecl;
+                                        set_parent : procedure (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; parent:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board);cdecl;
                                         distanceFromSolution : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_KInt;cdecl;
-                                        makeMove : procedure (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; move:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move);cdecl;
+                                        equals : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; other:PuzzleSolver_kref_kotlin_Any):PuzzleSolver_KBoolean;cdecl;
+                                        hashCode : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_KInt;cdecl;
+                                        makeMove : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; move:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board;cdecl;
                                         number : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; row:PuzzleSolver_KInt; column:PuzzleSolver_KInt):PuzzleSolver_KInt;cdecl;
-                                        possibleMoves : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; parent:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_kref_kotlin_collections_List;cdecl;
+                                        possibleMoves : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board):PuzzleSolver_kref_kotlin_collections_List;cdecl;
                                         tryMove : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Board; row:PuzzleSolver_KInt; column:PuzzleSolver_KInt):PuzzleSolver_KBoolean;cdecl;
                                         Companion : record
                                             _type : function :PPuzzleSolver_KType;cdecl;
@@ -159,9 +167,8 @@ type
                                       end;
                                     Move : record
                                         _type : function :PPuzzleSolver_KType;cdecl;
-                                        Move : function (row:PuzzleSolver_KInt; column:PuzzleSolver_KInt; parent:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;cdecl;
+                                        Move : function (row:PuzzleSolver_KInt; column:PuzzleSolver_KInt):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;cdecl;
                                         get_column : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_KInt;cdecl;
-                                        get_parent : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move;cdecl;
                                         get_row : function (thiz:PuzzleSolver_kref_com_emc_symmwin_puzzle_Solver_Move):PuzzleSolver_KInt;cdecl;
                                       end;
                                   end;
@@ -211,7 +218,7 @@ uses
 
 initialization
   LoadPuzzleSolver('../MultiPlatformPuzzleSolver/build/bin/mingw/releaseShared/PuzzleSolver.dll');
-  
+
 finalization
   FreePuzzleSolver;
 
