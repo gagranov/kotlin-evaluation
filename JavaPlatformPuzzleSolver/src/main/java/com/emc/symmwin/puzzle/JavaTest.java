@@ -31,7 +31,7 @@ public class JavaTest {
     notFound = 0;
 
     long start = System.currentTimeMillis();
-    for (int i = 0; i < 4000; ++i) {
+    for (int i = 0; i < 1000; ++i) {
       Collection<Board> solution = JavaSolver.solve(Board.getBoard(SIZE, 9));
       if (solution == null) {
         System.out.println("No Solution Found!");

@@ -77,12 +77,17 @@ public class JavaSolver {
     }
 
     public static Board getBoard(int size, int randomMoveCount) {
+      HashSet<Board> visited = new HashSet<>();
       Board board = getBoard(size);
       Random rand = new Random();
+      visited.add(board);
       while (randomMoveCount > 0) {
-        --randomMoveCount;
         List<Move> moves = board.getPossibleMoves();
-        board.makeMove(moves.get(rand.nextInt(moves.size())));
+        Board nextBoard = new Board(board).makeMove(moves.get(rand.nextInt(moves.size())));
+        if (visited.add(nextBoard)) {
+          --randomMoveCount;
+          board = nextBoard;
+        }
       }
       return board;
     }
@@ -108,6 +113,24 @@ public class JavaSolver {
       return distance;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+      if (obj instanceof Board) {
+        Board board = (Board) obj;
+        for (int row = 0; row < m_size; ++row)
+          for (int column = 0; column < m_size; ++column)
+            if (m_number[row][column] != board.m_number[row][column])
+              return false;
+        return true;
+      }
+      return false;
+    }
+
+    @Override
+    public int hashCode() {
+      return Arrays.deepHashCode(m_number);
+    }
+
     public int depth() {
       Board board = this;
       int count = 1;
@@ -128,8 +151,10 @@ public class JavaSolver {
 
   public static Collection<Board> solve(Board board) {
     ArrayDeque<Board> queue = new ArrayDeque<>();
+    HashSet<Board> visited = new HashSet<>();
     int count = 0;
     queue.addLast(board);
+    visited.add(board);
     while (queue.size() > 0) {
       board = queue.removeFirst();
       if (++count == 100000 || board.distanceFromSolution() == 0) {
@@ -141,7 +166,9 @@ public class JavaSolver {
         return solution;
       }
       for (Move move : board.getPossibleMoves()) {
-        queue.addLast(new Board(board).makeMove(move));
+        Board nextBoard = new Board(board).makeMove(move);
+        if (visited.add(nextBoard))
+          queue.addLast(nextBoard);
       }
     }
     return null;

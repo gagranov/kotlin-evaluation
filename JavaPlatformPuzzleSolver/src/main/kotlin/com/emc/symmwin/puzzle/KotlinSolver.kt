@@ -8,8 +8,10 @@ object KotlinSolver {
   @JvmStatic
   fun solve(puzzle: Board?): Collection<Board?>? {
     val queue = ArrayDeque<Board?>()
+    val visited = HashSet<Board?>()
     var count = 0
     queue.addLast(puzzle)
+    visited.add(puzzle)
     while (queue.size > 0) {
       var board = queue.removeFirst()
       if (++count == 100000 || board!!.distanceFromSolution() == 0) {
@@ -21,7 +23,8 @@ object KotlinSolver {
         return solution
       }
       for (move in board.possibleMoves()) {
-        queue.add(Board(board).makeMove(move))
+        val nextBoard = Board(board).makeMove(move)
+        if (visited.add(nextBoard)) queue.addLast(nextBoard)
       }
     }
     return null
@@ -73,6 +76,18 @@ object KotlinSolver {
       return number[row][column]
     }
 
+    override fun equals(other: Any?): Boolean {
+      if (other is Board) {
+        for (row in 0 until size) for (column in 0 until size) if (number[row][column] != other.number[row][column]) return false
+        return true
+      }
+      return false
+    }
+
+    override fun hashCode(): Int {
+      return number.contentDeepHashCode()
+    }
+
     fun distanceFromSolution(): Int {
       var distance = 0
       var shouldBeRow: Int
@@ -120,11 +135,18 @@ object KotlinSolver {
 
       @JvmStatic
       fun getBoard(size: Int, randomMoveCount: Int): Board {
-        val board = getBoard(size)
+        val visited = HashSet<Board>()
+        var board = getBoard(size)
         val rand = Random()
-        for (randomMove in 0 until randomMoveCount) {
+        visited.add(board)
+        var count = randomMoveCount
+        while (count > 0) {
           val moves = board.possibleMoves()
-          board.makeMove(moves[rand.nextInt(moves.size)])
+          val nextBoard = Board(board).makeMove(moves[rand.nextInt(moves.size)])
+          if (visited.add(nextBoard)) {
+            --count
+            board = nextBoard
+          }
         }
         return board
       }

@@ -19,11 +19,11 @@ private fun print(board: Board) {
   println()
 }
 
-fun main(args: Array<String>) {
+fun main() {
   var found = 0
   var notFound = 0
   val time = measureTimeMillis {
-    repeat(4000) {
+    repeat(1000) {
       val solution = JavaSolver.solve(Board.getBoard(SIZE, 9))
       if (solution == null) {
         println("No Solution Found!")
