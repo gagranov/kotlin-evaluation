@@ -5,7 +5,7 @@ object Form1: TForm1
   Width = 653
   Align = alClient
   BorderWidth = 4
-  Caption = 'Pascal Call Kotlin DLL'
+  Caption = 'Free Pascal Calls Kotlin DLL'
   ClientHeight = 352
   ClientWidth = 653
   Color = clNavy
