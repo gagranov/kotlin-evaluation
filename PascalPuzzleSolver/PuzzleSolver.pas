@@ -98,6 +98,8 @@ begin
       if board.pinned <> nil then
         symbols.DisposeStablePointer(board.pinned);
       board := solution[i];
+      solution[i].pinned := nil;
+      symbols.kotlin.root.com.emc.symmwin.puzzle.Solver.Board.set_parent(board, solution[i]);
       SetLength(solution,i);
     end
 end;
